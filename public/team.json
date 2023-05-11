@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 1,
+        "image": "https://i.ibb.co/pP91YXC/1.jpg",
+        "name": "John Smith",
+        "designation": "Mechanic Engineer"
+      },
+      {
+        "_id": 2,
+        "image": "https://i.ibb.co/xCyDGzn/3.jpg",
+        "name": "Jane Doe",
+        "designation": "Parts & Service Advisor"
+      },
+      {
+        "_id": 3,
+        "image": "https://i.ibb.co/rvS8vqj/2.jpg",
+        
+        "name": "Michael Johnson",
+        "designation": "Auto Electrician"
+      }
+      
+]

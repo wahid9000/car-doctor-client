@@ -1,7 +1,7 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
-const OurTeamSlider = ({ member }) => {
-    const { _id, name, image, designation } = member;
+const OurTeamCard = ({ member }) => {
+    const { name, image, designation } = member;
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
             <figure className="px-10 pt-10">
@@ -22,4 +22,4 @@ const OurTeamSlider = ({ member }) => {
     );
 };
 
-export default OurTeamSlider;
+export default OurTeamCard;

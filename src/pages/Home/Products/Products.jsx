@@ -18,7 +18,7 @@ const Products = () => {
                 <p>The majority have suffered alteration in some form, by injected humour, or randomised <br /> words which do not look even slightly believable. </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12 justify-center">
                 {
                     products.map(product => <ProductCards
                     key={product._id}

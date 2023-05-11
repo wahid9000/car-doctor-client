@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import OurTeamSlider from "./OurTeamSlider";
+import OurTeamCard from "./OurTeamCard";
 
 const OurTeam = () => {
 
@@ -19,14 +19,14 @@ const OurTeam = () => {
                 <p>The majority have suffered alteration in some form, by injected humour, or randomised <br /> words which do not look even slightly believable. </p>
             </div>
 
-            <div className="grid md:grid-cols-3">
+            <div className="grid md:grid-cols-3 mt-12 justify-center ">
                 {
-                    team.map(member => <OurTeamSlider
+                    team.map(member => <OurTeamCard
                     key={member._id}
                     member={member}
                     
                     
-                    ></OurTeamSlider>)
+                    ></OurTeamCard>)
                 }
             </div>
         </div>

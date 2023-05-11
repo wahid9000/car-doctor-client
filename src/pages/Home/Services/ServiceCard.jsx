@@ -18,6 +18,7 @@ const ServiceCard = ({service}) => {
             
                 </div>
             </div>
+            
         </div>
     );
 };

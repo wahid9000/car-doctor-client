@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import image from '../../assets/images/checkout/checkout.png'
 import BookingRows from "./BookingRows";
+import Swal from 'sweetalert2';
 
 const Bookings = () => {
     const { user } = useContext(AuthContext);
@@ -15,6 +16,39 @@ const Bookings = () => {
             .then(data => setBookings(data))
     }, [])
 
+    const handleDelete = _id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/bookings/${_id}`, {
+                    method: "DELETE",
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        const remaining = bookings.filter(b => b._id !== _id);
+                        setBookings(remaining);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your Booked Service has been deleted successfully.',
+                                'success'
+                            )
+                        }
+
+                    })
+            }
+        })
+    }
+
 
     return (
         <div>
@@ -24,10 +58,13 @@ const Bookings = () => {
                 </div>
             </div>
 
-            <div className="overflow-x-auto w-full mt-10">
+            <div className="overflow-x-auto w-full my-12">
                 <table className="table w-10/12 mx-auto">
                     <thead>
                         <tr>
+                            <th>
+                                <label></label>
+                            </th>
                             <th>Image</th>
                             <th>Service Name</th>
                             <th>Service Price</th>
@@ -40,10 +77,7 @@ const Bookings = () => {
                             bookings.map(booking => <BookingRows
                                 key={booking._id}
                                 booking={booking}
-
-
-
-
+                                handleDelete = {handleDelete}
                             ></BookingRows>)
                         }
 

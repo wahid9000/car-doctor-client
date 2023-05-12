@@ -1,14 +1,21 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import image from '../../assets/images/checkout/checkout.png'
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 const BookService = () => {
+    
+    const { pathName } = useLocation();
+    useScrollTop(pathName);
+
+
     const service = useLoaderData();
     const { title, price, img, _id } = service;
     console.log(service);
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const handleBookService = (event) => {
         event.preventDefault();
@@ -39,6 +46,7 @@ const BookService = () => {
                         icon: 'success',
                         confirmButtonText: 'Continue'
                     })
+                    navigate('/bookings')
                 }
 
             })

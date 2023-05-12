@@ -3,8 +3,14 @@ import { AuthContext } from "../../providers/AuthProvider";
 import image from '../../assets/images/checkout/checkout.png'
 import BookingRows from "./BookingRows";
 import Swal from 'sweetalert2';
+import { useLocation } from "react-router-dom";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 const Bookings = () => {
+
+    const { pathName } = useLocation();
+    useScrollTop(pathName);
+
     const { user } = useContext(AuthContext);
     const [bookings, setBookings] = useState([])
 

@@ -1,13 +1,15 @@
 
 import { FaFacebook, FaGoogle, FaLinkedin } from 'react-icons/fa';
 import image from '../../assets/images/login/login.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const Register = () => {
 
-    const {createUser} = useContext(AuthContext)
+    const {createUser} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSignUp = event => {
         event.preventDefault();
@@ -17,10 +19,16 @@ const Register = () => {
         const password = form.password.value;
         console.log(name, email, password);
 
+        if(password.length < 6){
+            toast("Password should be of atleast 6 character")
+        }
+
         createUser(email, password) 
         .then(result => {
             const createdUser = result.user;
             console.log(createdUser);
+            toast("Registration successful");
+            navigate('/');
         })
         .then(error => {
             console.log(error);

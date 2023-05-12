@@ -1,11 +1,12 @@
 import { FaFacebook, FaGoogle, FaLinkedin } from 'react-icons/fa';
 import image from '../../assets/images/login/login.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 const Login = () => {
 
-    const {loginuser} = useContext(AuthContext);
+    const {loginUser} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -14,10 +15,12 @@ const Login = () => {
         const password = form.password.value;
         console.log( email, password);
 
-        loginuser(email, password)
+        loginUser(email, password)
         .then(result => {
             const loggedUser = result.user;
             console.log(loggedUser);
+            form.reset();
+            navigate('/')
         })
         .catch(error => {
             console.log(error);
@@ -41,13 +44,13 @@ const Login = () => {
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="text" placeholder="email" className="input input-bordered rounded-md" />
+                                    <input type="email" placeholder="email" name="email" className="input input-bordered rounded-md" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input type="text" placeholder="password" className="input input-bordered rounded-md" />
+                                    <input type="password" name="password" placeholder="password" className="input input-bordered rounded-md" required />
                                     <label className="label">
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>

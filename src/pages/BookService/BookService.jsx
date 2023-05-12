@@ -2,10 +2,12 @@ import { useLoaderData } from "react-router-dom";
 import image from '../../assets/images/checkout/checkout.png'
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const BookService = () => {
     const service = useLoaderData();
-    const { title, price, img, _id} = service;
+    const { title, price, img, _id } = service;
+    console.log(service);
     const { user } = useContext(AuthContext)
 
     const handleBookService = (event) => {
@@ -15,22 +17,32 @@ const BookService = () => {
         const email = form.email.value;
         const phone = form.phone.value;
         const date = form.date.value;
-        const bookingInfo = { customerName:name, email, phone, date,img, service_id: _id, service: title, servicePrice: price  };
+        const bookingInfo = { customerName: name, email, phone, date, img, service_id: _id, service: title, servicePrice: price };
         console.log(bookingInfo);
 
         fetch('http://localhost:5000/bookings', {
             method: "POST",
             headers: {
-                "content-type" : "application/json"
+                "content-type": "application/json"
             },
             body: JSON.stringify(bookingInfo)
 
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-        })
-        
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.insertedId) {
+                    form.reset();
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Service Booked Successfully',
+                        icon: 'success',
+                        confirmButtonText: 'Continue'
+                    })
+                }
+
+            })
+
 
 
 
@@ -42,12 +54,17 @@ const BookService = () => {
         <div>
             <div className="relative mt-10 md:mt-5 border p-24 w-11/12 md:w-10/12 mx-auto rounded-xl" style={{ backgroundImage: `url(${image})` }}>
                 <div className="absolute bottom-0 flex items-center gap-5 left-0 right-0 rounded-xl bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] h-full">
-                    <h2 className="text-3xl font-bold text-white pl-6">Book Your Service : {title}</h2>
+                    <h2 className="text-3xl font-bold text-white pl-6">Book Your Service</h2>
                 </div>
             </div>
 
             <div className="border my-12 p-8 w-11/12 md:w-10/12 mx-auto bg-slate-200 rounded-xl">
                 <div className="md:w-8/12 mx-auto">
+                    <div className="text-center text-lg font-bold mb-10">
+                        <h2>Service Name: {title}</h2>
+                        <h2>Price: ${price}</h2>
+                    </div>
+
                     <form onSubmit={handleBookService} className=" space-y-3">
                         <div className="grid grid-cols-2 gap-5">
                             <div>

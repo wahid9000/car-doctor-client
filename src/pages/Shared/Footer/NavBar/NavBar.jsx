@@ -1,15 +1,37 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../../assets/logo.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 const NavBar = () => {
 
     const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout()
-            .then(() => { })
-            .catch(error => console.log(error))
+
+        Swal.fire({
+            title: 'Log Out?',
+            text: "You will be redirected to the Login Page!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Log Out!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logout()
+                    .then(() => { })
+                    .catch(error => console.log(error))
+                Swal.fire(
+                    'Logged Out!',
+                    'You have Logged Out Successfully.',
+                    'success'
+                )
+                navigate('/login')
+
+            }
+        })
     }
 
     return (
@@ -21,10 +43,11 @@ const NavBar = () => {
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link>Home</Link></li>
-                        <li><Link>About</Link></li>
                         <li><Link>Services</Link></li>
-                        <li><Link>Blog</Link></li>
-                        <li><Link>Contact</Link></li>
+                        {
+                            user &&
+                            <li><Link to="/bookings">Bookings</Link></li>
+                        }
                     </ul>
                 </div>
                 <Link to="/" className="btn btn-ghost normal-case text-xl"><img src={logo} alt="" /></Link>
@@ -32,11 +55,9 @@ const NavBar = () => {
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     <li><Link>Home</Link></li>
-                    <li><Link>About</Link></li>
                     <li><Link>Services</Link></li>
-                    <li><Link>Blog</Link></li>
                     {
-                        user && 
+                        user &&
                         <li><Link to="/bookings">Bookings</Link></li>
                     }
                 </ul>

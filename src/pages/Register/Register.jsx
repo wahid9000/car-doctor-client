@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 
 const Register = () => {
 
-    const {createUser} = useContext(AuthContext);
+    const {createUser, logout} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSignUp = event => {
@@ -28,7 +28,8 @@ const Register = () => {
             const createdUser = result.user;
             console.log(createdUser);
             toast("Registration successful");
-            navigate('/');
+            logout();
+            navigate('/login');
         })
         .then(error => {
             console.log(error);

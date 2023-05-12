@@ -3,6 +3,7 @@ import image from '../../assets/images/login/login.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
+import { toast } from 'react-hot-toast';
 const Login = () => {
 
     const {loginUser} = useContext(AuthContext);
@@ -19,6 +20,7 @@ const Login = () => {
         .then(result => {
             const loggedUser = result.user;
             console.log(loggedUser);
+            toast("Logged In Successfully")
             form.reset();
             navigate('/')
         })

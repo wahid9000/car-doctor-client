@@ -2,7 +2,7 @@ import { FaCalendarAlt, FaLocationArrow, FaPhoneAlt } from "react-icons/fa";
 
 const Information = () => {
     return (
-        <div className="border my-24 flex justify-around px-5 py-20 bg-[#151515] text-white rounded-lg">
+        <div className="border my-24 flex justify-around px-5 py-20 bg-[#151515] text-white rounded-lg mx-auto w-11/12 md:w-full gap-3">
             <div className="flex items-center gap-5">
                 <div>
                     <FaCalendarAlt></FaCalendarAlt>

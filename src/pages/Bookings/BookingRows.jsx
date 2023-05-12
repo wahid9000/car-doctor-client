@@ -3,7 +3,6 @@ import moment from 'moment/moment';
 const BookingRows = ({ booking, handleDelete, handleBookingConfirm }) => {
 
     const { _id, date, img, servicePrice, service, status } = booking;
-    console.log(booking);
 
     return (
         <tr>

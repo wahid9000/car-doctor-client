@@ -1,10 +1,14 @@
 import { FaFacebook, FaGoogle, FaLinkedin } from 'react-icons/fa';
 import image from '../../assets/images/login/login.svg'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { useScrollTop } from '../../hooks/useScrollTop';
 const Login = () => {
+
+    const { pathName } = useLocation();
+    useScrollTop(pathName);
 
     const {loginUser} = useContext(AuthContext);
     const navigate = useNavigate();

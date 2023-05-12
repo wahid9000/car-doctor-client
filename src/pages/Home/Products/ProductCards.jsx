@@ -4,7 +4,7 @@ import Rating from "react-rating";
 const ProductCards = ({ product }) => {
     const { image, name, price, ratings } = product;
     return (
-        <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card w-9/12 mx-auto md:w-96 bg-base-100 shadow-xl">
 
             <figure className="px-10 pt-10 bg-slate-200">
                 <img src={image} />

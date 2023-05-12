@@ -68,7 +68,7 @@ const Bookings = () => {
             if(data.modifiedCount > 0){
                 const remaining = bookings.filter(booking => booking._id !== _id);
                 const updated = bookings.find(booking => booking._id === _id);
-                updated.status = 'Confirm';
+                updated.status = 'confirm';
                 const newBookings = [updated, ...remaining]
                 setBookings(newBookings);
                 Swal.fire({

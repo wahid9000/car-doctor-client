@@ -1,8 +1,9 @@
 import moment from 'moment/moment';
 
-const BookingRows = ({ booking, handleDelete }) => {
+const BookingRows = ({ booking, handleDelete, handleBookingConfirm }) => {
 
-    const { _id, date, img, servicePrice, service } = booking;
+    const { _id, date, img, servicePrice, service, status } = booking;
+    console.log(booking);
 
     return (
         <tr>
@@ -31,7 +32,11 @@ const BookingRows = ({ booking, handleDelete }) => {
                 <div className="font-bold">{moment(date).format("MMMM D, YYYY,  h:mm a")}</div>
             </td>
             <th>
-                <button className="btn btn-warning rounded-md bg-orange-600 text-white">Pending</button>
+                { status === 'confirm' ? 
+                    <button className="btn btn-outline rounded-md text-orange-600 ">Confirmed</button>
+                :
+                    <button onClick={() => handleBookingConfirm(_id)} className="btn btn-warning rounded-md bg-orange-600 text-white">Confirm</button>
+                }
             </th>
 
         </tr>

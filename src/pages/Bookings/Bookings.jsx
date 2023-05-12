@@ -14,7 +14,7 @@ const Bookings = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => setBookings(data))
-    }, [])
+    }, [url])
 
     const handleDelete = _id => {
         Swal.fire({
@@ -33,10 +33,9 @@ const Bookings = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data);
-                        const remaining = bookings.filter(b => b._id !== _id);
-                        setBookings(remaining);
                         if (data.deletedCount > 0) {
+                        const remaining = bookings.filter(booking => booking._id !== _id);
+                        setBookings(remaining);
                             Swal.fire(
                                 'Deleted!',
                                 'Your Booked Service has been deleted successfully.',
@@ -45,6 +44,34 @@ const Bookings = () => {
                         }
 
                     })
+            }
+        })
+    }
+
+    const handleBookingConfirm = (_id) => {
+        fetch(`http://localhost:5000/bookings/${_id}`, {
+            method: "PATCH",
+            headers: {
+                "content-type" : "application/json"
+            },
+            body: JSON.stringify({status: 'confirm'})
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.modifiedCount > 0){
+                const remaining = bookings.filter(booking => booking._id !== _id);
+                const updated = bookings.find(booking => booking._id === _id);
+                updated.status = 'Confirm';
+                const newBookings = [updated, ...remaining]
+                setBookings(newBookings);
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Booking Has Been Confirmed!',
+                    icon: 'success',
+                    confirmButtonText: 'Continue'
+                })
+                
             }
         })
     }
@@ -78,6 +105,7 @@ const Bookings = () => {
                                 key={booking._id}
                                 booking={booking}
                                 handleDelete = {handleDelete}
+                                handleBookingConfirm = {handleBookingConfirm}
                             ></BookingRows>)
                         }
 

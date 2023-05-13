@@ -3,7 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import image from '../../assets/images/checkout/checkout.png'
 import BookingRows from "./BookingRows";
 import Swal from 'sweetalert2';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useScrollTop } from "../../hooks/useScrollTop";
 
 const Bookings = () => {
@@ -13,14 +13,29 @@ const Bookings = () => {
 
     const { user } = useContext(AuthContext);
     const [bookings, setBookings] = useState([])
+    const navigate = useNavigate();
 
     const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
     useEffect(() => {
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("car-doctor-access-token")}`
+            }
+        })
             .then(res => res.json())
-            .then(data => setBookings(data))
-    }, [url])
+            .then(data => {
+                if(!data.error){
+                    setBookings(data)
+                }
+                else{
+                    //logout and then navigate
+                    navigate('/')
+                }
+                
+            })
+    }, [url, navigate])
 
     const handleDelete = _id => {
         Swal.fire({

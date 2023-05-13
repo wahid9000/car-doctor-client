@@ -22,7 +22,6 @@ const NavBar = () => {
             if (result.isConfirmed) {
                 logout()
                     .then(() => { 
-                        localStorage.removeItem("car-doctor-access-token");
                      })
                     .catch(error => console.log(error))
                 Swal.fire(

@@ -1,11 +1,10 @@
-
-import { FaFacebook, FaGoogle, FaLinkedin } from 'react-icons/fa';
 import image from '../../assets/images/login/login.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { updateProfile } from 'firebase/auth';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Register = () => {
 
@@ -89,14 +88,7 @@ const Register = () => {
 
                             </div>
                         </form>
-
-                        <p className="text-center mt-3"><small>Or Sign Up With</small></p>
-                        <div className='flex justify-center items-center gap-3 my-2'>
-                            <button className="btn btn-sm btn-circle  btn-outline"><FaFacebook></FaFacebook></button>
-                            <button className="btn btn-sm btn-circle  btn-outline"><FaLinkedin></FaLinkedin></button>
-                            <button className="btn btn-sm btn-circle  btn-outline"><FaGoogle></FaGoogle></button>
-                        </div>
-
+                        <SocialLogin></SocialLogin>
                         <p className='text-center'>Already Have an Account? <Link to="/login" className='text-orange-600 font-bold'>Sign In</Link></p>
 
 

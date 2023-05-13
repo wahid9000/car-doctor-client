@@ -21,7 +21,9 @@ const NavBar = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 logout()
-                    .then(() => { })
+                    .then(() => { 
+                        localStorage.removeItem("car-doctor-access-token");
+                     })
                     .catch(error => console.log(error))
                 Swal.fire(
                     'Logged Out!',

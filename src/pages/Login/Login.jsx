@@ -10,28 +10,50 @@ const Login = () => {
     const { pathName } = useLocation();
     useScrollTop(pathName);
 
-    const {loginUser} = useContext(AuthContext);
+    const { loginUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (event) => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log( email, password);
+
 
         loginUser(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            toast("Logged In Successfully")
-            form.reset();
-            navigate('/')
-        })
-        .catch(error => {
-            console.log(error);
-        }) 
+            .then(result => {
+                const loggedUser = result.user;
+                const user = {
+                    email: loggedUser.email
+                }
+                console.log(loggedUser);
+                toast("Logged In Successfully")
+                form.reset();
+                navigate(from, { replace: true })
+                fetch('http://localhost:5000/jwt', {
+                    method: "POST",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(user)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+
+                    localStorage.setItem("car-doctor-access-token", data.token);
+                })
+            })
+            .catch(error => {
+                console.log(error);
+                toast("Invalid Email or Password")
+            })
     }
+
+
 
 
     return (
@@ -58,7 +80,7 @@ const Login = () => {
                                     </label>
                                     <input type="password" name="password" placeholder="password" className="input input-bordered rounded-md" required />
                                     <label className="label">
-                                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                        <Link className="label-text-alt link link-hover">Forgot password?</Link>
                                     </label>
                                 </div>
                                 <div className="form-control mt-6">

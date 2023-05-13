@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { updateProfile } from 'firebase/auth';
 
 const Register = () => {
 
@@ -17,7 +18,7 @@ const Register = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, email, password);
+        console.log(name, email);
 
         if(password.length < 6){
             toast("Password should be of atleast 6 character")
@@ -28,10 +29,21 @@ const Register = () => {
             const createdUser = result.user;
             console.log(createdUser);
             toast("Registration successful");
+            updateUserProfile(result.user, name)
             logout();
             navigate('/login');
         })
         .then(error => {
+            console.log(error);
+        })
+    }
+
+    const updateUserProfile = (user, name) => {
+        updateProfile(user, {
+            displayName: name,
+        })
+        .then()
+        .catch(error => {
             console.log(error);
         })
     }

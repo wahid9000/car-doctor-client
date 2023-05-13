@@ -77,7 +77,7 @@ const BookService = () => {
                         <div className="grid grid-cols-2 gap-5">
                             <div>
                                 <label htmlFor="Name">Name:</label>
-                                <input type="text" name="name" defaultValue={user?.name} placeholder="Name" className="input input-bordered w-full max-w-xs rounded-md mb-3 md:mb-0" required />
+                                <input type="text" name="name" defaultValue={user?.displayName} placeholder="Name" className="input input-bordered w-full max-w-xs rounded-md mb-3 md:mb-0" required />
                             </div>
                             <div>
                                 <label htmlFor="Email">Email:</label>
